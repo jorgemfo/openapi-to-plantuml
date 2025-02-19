@@ -56,7 +56,7 @@ final class Common {
         boolean isEnum = false;
         List<Relationship> relationships = new ArrayList<>();
         List<Class> classes = new ArrayList<>();
-        if (schema.get$ref() != null) {
+        if (schema != null && schema.get$ref() != null) {
             // this is an alias case for a schema
             String otherClassName = names.refToClassName(schema.get$ref()).className();
             relationships.add(Association.from(name).to(otherClassName).one().build());
@@ -71,7 +71,7 @@ final class Common {
             } else {
                 throw new RuntimeException("unexpected");
             }
-        } else if (schema.getProperties() != null) {
+        } else if (schema != null && schema.getProperties() != null) {
             final Set<String> required;
             if (schema.getRequired() != null) {
                 required = new HashSet<>(schema.getRequired());
@@ -304,7 +304,7 @@ final class Common {
     }
 
     private static Optional<String> getUmlTypeName(Schema<?> schema, Names names) {
-        return getUmlTypeName(schema.get$ref(), schema, names);
+        return schema != null ? getUmlTypeName(schema.get$ref(), schema, names) : Optional.empty();
     }
 
     static Optional<String> getUmlTypeName(String ref, Schema<?> schema, Names names) {

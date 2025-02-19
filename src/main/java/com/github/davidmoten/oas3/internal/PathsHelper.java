@@ -197,7 +197,7 @@ public final class PathsHelper {
                 Schema<?> sch = mediaType.getValue().getSchema();
                 // note that sch cannot be null because the parser sets the
                 // response body to null if schema is missing
-                if (sch.get$ref() != null) {
+                if (sch != null && sch.get$ref() != null) {
                     requestBodyClassName = names.refToClassName(sch.get$ref()).className();
                     model = Model.EMPTY;
                 } else {
